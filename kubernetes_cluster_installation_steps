@@ -1,15 +1,17 @@
-1) Disable ufw
+# This file includes the steps for Kubernetes version 1.28.6-1.1
+
+1) Disable ufw on all nodes
 
 systemctl stop ufw
 systemctl disable ufw
 
-2) Edit /etc/hostst to include all the nodes
+2) Edit /etc/hostst to include all the nodes on all nodes
 
 3) Setup DNS for all the nodes
 
 4) Configure passwordless SSH from master nodes to worker nodes
 
-5) Step 1: Verify the init system (initd or SystemV). Accordingly the kubelet configuration is going to be modified soon. If it systemd then cgroup driver should be systemd. There are two possibilities; cgroupfs and systemd.
+5) Verify the init system (initd or SystemV) for all the nodes. Accordingly the kubelet configuration is going to be modified soon. If it systemd then cgroup driver should be systemd. There are two possibilities; cgroupfs and systemd.
 
 root@drizzt:~# cat /proc/1/comm
 systemd
@@ -22,7 +24,9 @@ systemd 249 (249.11-0ubuntu3)
 +PAM +AUDIT +SELINUX +APPARMOR +IMA +SMACK +SECCOMP +GCRYPT +GNUTLS -OPENSSL +ACL +BLKID +CURL +ELFUTILS -FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP -LIBFDISK +PCRE2 -PWQUALITY -P11KIT -QRENCODE +BZIP2 +LZ4 +XZ +ZLIB +ZSTD -XKBCOMMON +UTMP +SYSVINIT default-hierarchy=unified
 root@drizzt:~#
 
-6) Install containerd
+6) Install containerd on all nodes
+
+    a) Install overlay and br_filter kernel modules
 
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
@@ -32,6 +36,8 @@ EOF
 sudo modprobe overlay
 sudo modprobe br_netfilter
 
+    b) Enable IP forwarding and bridging
+
 # sysctl params required by setup, params persist across reboots
 cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-iptables  = 1
@@ -39,3 +45,85 @@ net.bridge.bridge-nf-call-ip6tables = 1
 net.ipv4.ip_forward                 = 1
 EOF
 
+# Apply sysctl params without reboot
+sudo sysctl --system
+
+    c) Install contanerd
+
+https://github.com/containerd/containerd/blob/main/docs/getting-started.md
+
+# Follow Option 1
+
+# Note that init.d service configuration files are stored in /lib/systemd/system/.
+
+    d) Install runc
+
+    e) Install CRI plugins
+
+    f) Create the default containerd configuration file
+
+mkdir /etc/containerd
+containerd config default > /etc/containerd/config.toml
+
+    g) Configure the systemd cgroup driver 
+
+# To use the systemd cgroup driver in /etc/containerd/config.toml with runc, set
+
+[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+  ...
+  [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+    SystemdCgroup = true
+
+# Restart containerd
+systemctl restart containerd
+
+7) Remember to set systemd init service in Kubelet configuration section in the kubeadm init file
+
+# kubeadm-config.yaml
+kind: ClusterConfiguration
+apiVersion: kubeadm.k8s.io/v1beta3
+kubernetesVersion: v1.21.0
+---
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+cgroupDriver: systemd
+
+9) Install Kubernetes repo on all nodes
+
+https://v1-28.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
+
+10 ) Install kubeadm, kubelet, kubectl on all nodes
+
+11 ) Prepare kubeadm init file
+
+https://v1-28.docs.kubernetes.io/docs/reference/config-api/kubeadm-config.v1beta3/#kubeadm-k8s-io-v1beta3-ClusterConfiguration
+
+# Example init file for both
+
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: InitConfiguration
+nodeRegistration:
+  criSocket: unix:///var/run/containerd/containerd.sock
+localAPIEndpoint:
+  advertiseAddress: "192.168.44.10"
+  bindPort: 6443
+---
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: ClusterConfiguration
+networking:
+  serviceSubnet: "10.96.0.0/16"
+  podSubnet: "10.10.10.0/24"
+  dnsDomain: "realm.com"
+clusterName: "fr"
+---
+apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+cgroupDriver: systemd
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+---
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: JoinConfiguration
+nodeRegistration:
+  criSocket: unix:///var/run/containerd/containerd.sock
