@@ -91,7 +91,8 @@ systemctl restart containerd
 
 ### 7. Remember to set systemd init service in Kubelet configuration section in the kubeadm init file.
 
-#### Example kubeadm-config.yaml    
+#### Example kubeadm-config.yaml  
+  
 > kind: ClusterConfiguration  
 > apiVersion: kubeadm.k8s.io/v1beta3  
 > kubernetesVersion: v1.21.0  
