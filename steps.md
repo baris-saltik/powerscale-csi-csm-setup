@@ -2,7 +2,7 @@ This file includes the steps for Kubernetes version 1.28.6-1.1.
 
 ### 1. Disable ufw on all nodes.
 
-> systemctl stop ufw
+> systemctl stop ufw  
 > systemctl disable ufw
 
 ### 2. Edit /etc/hostst to include all the nodes on all nodes.
