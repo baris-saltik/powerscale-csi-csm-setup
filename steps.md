@@ -79,9 +79,9 @@ containerd config default > /etc/containerd/config.toml
 
 To use the systemd cgroup driver in /etc/containerd/config.toml with runc, set the following in the file:
 
-> [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
->  ...
-> &nbsp;[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+> [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]  
+>  ...  
+> &nbsp;[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]  
 > &nbsp;&nbsp;&nbsp;SystemdCgroup = true
 
 Restart containerd.
