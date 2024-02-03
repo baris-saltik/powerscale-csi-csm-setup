@@ -89,32 +89,21 @@ Restart containerd.
 systemctl restart containerd
 ```
 
-### 7. Remember to set systemd init service in Kubelet configuration section in the kubeadm init file.
-
-#### Example kubeadm-config.yaml  
-
-> kind: ClusterConfiguration  
-> apiVersion: kubeadm.k8s.io/v1beta3  
-> kubernetesVersion: v1.21.0  
-> \---  
-> kind: KubeletConfiguration  
-> apiVersion: kubelet.config.k8s.io/v1beta1  
-> cgroupDriver: systemd  
-
-### 9. Install Kubernetes repo on all nodes.
+### 7. Install Kubernetes repo on all nodes.
 
 https://v1-28.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
 
-### 10. Install kubeadm, kubelet, kubectl on all nodes.
+### 8. Install kubeadm, kubelet, kubectl on all nodes.
 
-### 11 . Prepare kubeadm init file on the master node.
+### 9 . Prepare kubeadm init file on the master node.
 
 https://v1-28.docs.kubernetes.io/docs/reference/config-api/kubeadm-config.v1beta3/#kubeadm-k8s-io-v1beta3-ClusterConfiguration
 
+#### Remember to set systemd init service in Kubelet configuration section in the kubeadm init file.  
 #### Example init file for both "kubeadm init" and "kubeadm join":  
 
 > apiVersion: kubeadm.k8s.io/v1beta3  
-> kind: InitConfiguration  
+> **kind: InitConfiguration**  
 > nodeRegistration:  
 > &nbsp;&nbsp;criSocket: unix:///var/run/containerd/containerd.sock  
 > localAPIEndpoint:  
@@ -122,7 +111,7 @@ https://v1-28.docs.kubernetes.io/docs/reference/config-api/kubeadm-config.v1beta
 > &nbsp;&nbsp;bindPort: 6443  
 > \---  
 > apiVersion: kubeadm.k8s.io/v1beta3  
-> kind: ClusterConfiguration  
+> **kind: ClusterConfiguration**  
 > networking:  
 > &nbsp;&nbsp;serviceSubnet: "10.96.0.0/16"  
 > &nbsp;&nbsp;podSubnet: "11.11.11.0/24"  
@@ -130,18 +119,18 @@ https://v1-28.docs.kubernetes.io/docs/reference/config-api/kubeadm-config.v1beta
 > clusterName: "fr"  
 > \---  
 > apiVersion: kubelet.config.k8s.io/v1beta1  
-> kind: KubeletConfiguration  
+> **kind: KubeletConfiguration**  
 > cgroupDriver: systemd  
 > \---  
 > apiVersion: kubeproxy.config.k8s.io/v1alpha1  
-> kind: KubeProxyConfiguration  
+> **kind: KubeProxyConfiguration**  
 > \---  
 > apiVersion: kubeadm.k8s.io/v1beta3  
-> kind: JoinConfiguration  
+> **kind: JoinConfiguration**  
 > nodeRegistration:  
 > &nbsp;&nbsp;criSocket: unix:///var/run/containerd/containerd.sock  
 
-### 12. Run "kubeadm init" on the master node.
+### 10. Run "kubeadm init" on the master node.
 
 You had better take a snapshot of the master node if it is a virtual machine.
 
@@ -155,7 +144,7 @@ If there are no issues run it for real on the master node.
 kubeadm init --config kubeadm_init_custom.yaml
 ```
 
-### 13. Export KUBECONFIG pointing at /etc/kubernetes/admin.conf at boot time.
+### 11. Export KUBECONFIG pointing at /etc/kubernetes/admin.conf at boot time.
 
 ```console
 cat << EOF > /etc/profile.d/kubernetes_config.sh
@@ -165,26 +154,26 @@ chmod 755 /etc/profile.d/kubernetes_config.sh
 source /etc/profile
 ```
 
-### 14. Enable kubectl completion
+### 12. Enable kubectl completion
 
 ```console
 echo "source <(kubectl completion bash." >> /etc/profile.d/kubernetes_config.sh
 source /etc/profile
 ```
 
-### 15. Join the worker nodes.
+### 13. Join the worker nodes.
 
 ```console
 kubeadm join 192.168.44.10:6443 --cri-socket unix:///var/run/containerd/containerd.sock --token zx24m3.lwu8hu3kzxgzs4go --discovery-token-ca-cert-hash sha256:fdd5ecc3cffc1145f05534109a5fe035b3e0331c7a714b803b40848f3483a147
 ```
 
-### 16. Install networking. Example Weavenet file is provided in the repository as "weave-daemonset-k8s-1.11.yaml".
+### 14. Install networking. Example Weavenet file is provided in the repository as "weave-daemonset-k8s-1.11.yaml".
 
 ```console
 kubectl apply -f weave-daemonset-k8s-1.11.yaml
 ```
 
-### 17. Verify the cluster is ready to schedule nodes.
+### 15. Verify the cluster is ready to schedule nodes.
 
 ```console
 kubectl cluster-info
@@ -193,7 +182,7 @@ kubectl get nodes --namespace kube-system
 
 Wait till "Status" turns to "Ready".
 
-### 18. Untaint the master node if you want to schedule pods on that node too.
+### 16. Untaint the master node if you want to schedule pods on that node too.
 
 ```console
 kubectl describe nodes drizzt  | grep -i taint
@@ -205,7 +194,7 @@ kubectl taint node drizzt node-role.kubernetes.io/control-plane-
 ```
 > node/drizzt untainted
 
-### 19. Test the cluster by running a pod.
+### 17. Test the cluster by running a pod.
 
 ```console
 kubectl run --image nginx nginx
