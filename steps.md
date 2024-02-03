@@ -113,33 +113,33 @@ https://v1-28.docs.kubernetes.io/docs/reference/config-api/kubeadm-config.v1beta
 
 #### Example init file for both "kubeadm init" and "kubeadm join":
 
-> apiVersion: kubeadm.k8s.io/v1beta3
-> kind: InitConfiguration
-> nodeRegistration:
->  criSocket: unix:///var/run/containerd/containerd.sock
-> localAPIEndpoint:
->  advertiseAddress: "192.168.44.10"
->  bindPort: 6443
-> ---
-> apiVersion: kubeadm.k8s.io/v1beta3
-> kind: ClusterConfiguration
-> networking:
->  serviceSubnet: "10.96.0.0/16"
->  podSubnet: "11.11.11.0/24"
->  dnsDomain: "realm.com"
-> clusterName: "fr"
-> ---
-> apiVersion: kubelet.config.k8s.io/v1beta1
-> kind: KubeletConfiguration
-> cgroupDriver: systemd
-> ---
-> apiVersion: kubeproxy.config.k8s.io/v1alpha1
-> kind: KubeProxyConfiguration
-> ---
-> apiVersion: kubeadm.k8s.io/v1beta3
-> kind: JoinConfiguration
-> nodeRegistration:
->   criSocket: unix:///var/run/containerd/containerd.sock
+> apiVersion: kubeadm.k8s.io/v1beta3  
+> kind: InitConfiguration  
+> nodeRegistration:  
+>  criSocket: unix:///var/run/containerd/containerd.sock  
+> localAPIEndpoint:  
+>  advertiseAddress: "192.168.44.10"  
+>  bindPort: 6443  
+> ---  
+> apiVersion: kubeadm.k8s.io/v1beta3  
+> kind: ClusterConfiguration  
+> networking:  
+>  serviceSubnet: "10.96.0.0/16"  
+>  podSubnet: "11.11.11.0/24"  
+>  dnsDomain: "realm.com"  
+> clusterName: "fr"  
+> ---  
+> apiVersion: kubelet.config.k8s.io/v1beta1  
+> kind: KubeletConfiguration  
+> cgroupDriver: systemd  
+> ---  
+> apiVersion: kubeproxy.config.k8s.io/v1alpha1  
+> kind: KubeProxyConfiguration  
+> ---  
+> apiVersion: kubeadm.k8s.io/v1beta3  
+> kind: JoinConfiguration  
+> nodeRegistration:  
+>   criSocket: unix:///var/run/containerd/containerd.sock  
 
 ### 12. Run "kubeadm init" on the master node.
 
