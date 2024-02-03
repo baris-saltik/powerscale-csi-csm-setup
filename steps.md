@@ -16,10 +16,10 @@ systemctl disable ufw
 
 > cat /proc/1/comm  
 > systemd
-
-> ls -l /sbin/init 
+>
+> ls -l /sbin/init   
 > lrwxrwxrwx 1 root root 20 Apr  7  2022 /sbin/init -> /lib/systemd/systemd
-
+>
 > systemctl --version  
 > systemd 249 (249.11-0ubuntu3.7)
 +PAM +AUDIT +SELINUX +APPARMOR +IMA +SMACK +SECCOMP +GCRYPT +GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP +LIBFDISK +PCRE2 -PWQUALITY -P11KIT -QRENCODE +BZIP2 +LZ4 +XZ +ZLIB +ZSTD -XKBCOMMON +UTMP +SYSVINIT default-hierarchy=unified
@@ -163,7 +163,7 @@ cat << EOF > /etc/profile.d/kubernetes_config.sh
 > EOF
 chmod 755 /etc/profile.d/kubernetes_config.sh
 source /etc/profile
-```console
+```
 
 ### 14. Enable kubectl completion
 
@@ -184,7 +184,7 @@ kubeadm join 192.168.44.10:6443 --cri-socket unix:///var/run/containerd/containe
 kubectl apply -f weave-daemonset-k8s-1.11.yaml
 ```
 
-### 17. Verify the cluster is ready schedule nodes.
+### 17. Verify the cluster is ready to schedule nodes.
 
 ```console
 kubectl cluster-info
@@ -202,7 +202,7 @@ kubectl describe nodes drizzt  | grep -i taint
 
 ```console
 kubectl taint node drizzt node-role.kubernetes.io/control-plane-
-```console
+```
 > node/drizzt untainted
 
 ### 19. Test the cluster by running a pod.
@@ -238,7 +238,7 @@ kubectl exec --tty --stdin nginx -- /bin/bash
 Delete the pod.
 ```console
 kubectl delete pod nginx
-```console
+```
 
 > pod "nginx" deleted
 
