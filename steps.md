@@ -1,9 +1,10 @@
 This file includes the steps for Kubernetes version 1.28.6-1.1.
 
 ### 1. Disable ufw on all nodes.
-
-> systemctl stop ufw  
-> systemctl disable ufw
+```bash
+systemctl stop ufw  
+systemctl disable ufw
+```
 
 ### 2. Edit /etc/hostst to include all the nodes on all nodes.
 
@@ -13,15 +14,16 @@ This file includes the steps for Kubernetes version 1.28.6-1.1.
 
 ### 5. Verify the init system (initd or SystemV). for all the nodes. Accordingly the kubelet configuration is going to be modified soon. If it systemd then cgroup driver should be systemd. There are two possibilities; cgroupfs and systemd.
 
-> cat /proc/1/comm
+> cat /proc/1/comm  
 > systemd
 
-> ls -l /sbin/init
+> ls -l /sbin/init 
 > lrwxrwxrwx 1 root root 20 Apr  7  2022 /sbin/init -> /lib/systemd/systemd
 
 > systemctl --version  
-> systemd 249 (249.11-0ubuntu3.
-> +PAM +AUDIT +SELINUX +APPARMOR +IMA +SMACK +SECCOMP +GCRYPT +GNUTLS -OPENSSL +ACL +BLKID +CURL +ELFUTILS -FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP -LIBFDISK +PCRE2 -PWQUALITY -P11KIT -QRENCODE +BZIP2 +LZ4 +XZ +ZLIB +ZSTD -XKBCOMMON +UTMP +SYSVINIT default-hierarchy=unified
+> systemd 249 (249.11-0ubuntu3.7)
++PAM +AUDIT +SELINUX +APPARMOR +IMA +SMACK +SECCOMP +GCRYPT +GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP +LIBFDISK +PCRE2 -PWQUALITY -P11KIT -QRENCODE +BZIP2 +LZ4 +XZ +ZLIB +ZSTD -XKBCOMMON +UTMP +SYSVINIT default-hierarchy=unified
+
 
 
 ### 6. Install containerd on all nodes.
