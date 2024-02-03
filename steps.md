@@ -1,42 +1,42 @@
 # This file includes the steps for Kubernetes version 1.28.6-1.1.
 
-# Disable ufw on all nodes.
+# 1) Disable ufw on all nodes.
 
 systemctl stop ufw
 systemctl disable ufw
 
-# Edit /etc/hostst to include all the nodes on all nodes.
+# 2) Edit /etc/hostst to include all the nodes on all nodes.
 
 # 3) Setup DNS for all the nodes.
 
-4) Configure passwordless SSH from master nodes to worker nodes.
+# 4) Configure passwordless SSH from master nodes to worker nodes.
 
-5) Verify the init system (initd or SystemV) for all the nodes. Accordingly the kubelet configuration is going to be modified soon. If it systemd then cgroup driver should be systemd. There are two possibilities; cgroupfs and systemd.
+# 5) Verify the init system (initd or SystemV) for all the nodes. Accordingly the kubelet configuration is going to be modified soon. If it systemd then cgroup driver should be systemd. There are two possibilities; cgroupfs and systemd.
 
-root@drizzt:~# cat /proc/1/comm
+cat /proc/1/comm
 systemd
-root@drizzt:~#
-root@drizzt:~# ls -l /sbin/init
+
+ls -l /sbin/init
 lrwxrwxrwx 1 root root 20 Apr  7  2022 /sbin/init -> /lib/systemd/systemd
-root@drizzt:~#
-root@drizzt:~# systemctl --version
+
+systemctl --version
 systemd 249 (249.11-0ubuntu3)
 +PAM +AUDIT +SELINUX +APPARMOR +IMA +SMACK +SECCOMP +GCRYPT +GNUTLS -OPENSSL +ACL +BLKID +CURL +ELFUTILS -FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP -LIBFDISK +PCRE2 -PWQUALITY -P11KIT -QRENCODE +BZIP2 +LZ4 +XZ +ZLIB +ZSTD -XKBCOMMON +UTMP +SYSVINIT default-hierarchy=unified
-root@drizzt:~#
 
-6) Install containerd on all nodes.
 
-    a) Install overlay and br_filter kernel modules.
+# 6) Install containerd on all nodes.
 
-cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
-overlay
-br_netfilter
-EOF
+## a) Install overlay and br_filter kernel modules.
+
+> cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+> overlay
+> br_netfilter
+> EOF
 
 sudo modprobe overlay
 sudo modprobe br_netfilter
 
-    b) Enable IP forwarding and bridging.
+## b) Enable IP forwarding and bridging.
 
 # sysctl params required by setup, params persist across reboots
 cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
