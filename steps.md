@@ -204,13 +204,13 @@ kubectl run --image nginx nginx
 ```console
 kubectl get pods
 ```
-> NAME    READY   STATUS              RESTARTS   AGE
+> NAME    READY   STATUS              RESTARTS   AGE  
 > nginx   0/1     ContainerCreating   0          4s
 
 ```console
 kubectl get pods
 ```
-> NAME    READY   STATUS    RESTARTS   AGE
+> NAME    READY   STATUS    RESTARTS   AGE  
 > nginx   1/1     Running   0          15s
 
 Run a hostname command from withing pod.
@@ -218,10 +218,10 @@ Run a hostname command from withing pod.
 ```console
 kubectl exec --tty --stdin nginx -- /bin/bash
 ```
-> root@nginx:/#
-> root@nginx:/# hostname
-> nginx
-> root@nginx:/#exit
+> root@nginx:/#  
+> root@nginx:/# hostname  
+> nginx  
+> root@nginx:/#exit  
 > exit
 
 Delete the pod.
