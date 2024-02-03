@@ -92,11 +92,11 @@ systemctl restart containerd
 ### 7. Remember to set systemd init service in Kubelet configuration section in the kubeadm init file.
 
 #### Example kubeadm-config.yaml  
-  
+
 > kind: ClusterConfiguration  
 > apiVersion: kubeadm.k8s.io/v1beta3  
 > kubernetesVersion: v1.21.0  
-> ---  
+> \---  
 > kind: KubeletConfiguration  
 > apiVersion: kubelet.config.k8s.io/v1beta1  
 > cgroupDriver: systemd  
@@ -113,7 +113,7 @@ https://v1-28.docs.kubernetes.io/docs/reference/config-api/kubeadm-config.v1beta
 
 #### Example init file for both "kubeadm init" and "kubeadm join":
 
-apiVersion: kubeadm.k8s.io/v1beta3
+> apiVersion: kubeadm.k8s.io/v1beta3
 kind: InitConfiguration
 nodeRegistration:
   criSocket: unix:///var/run/containerd/containerd.sock
