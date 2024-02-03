@@ -11,7 +11,7 @@ This file includes the steps for Kubernetes version 1.28.6-1.1.
 
 ### 4. Configure passwordless SSH from master nodes to worker nodes.
 
-### 5. Verify the init system (initd or SystemV. for all the nodes. Accordingly the kubelet configuration is going to be modified soon. If it systemd then cgroup driver should be systemd. There are two possibilities; cgroupfs and systemd.
+### 5. Verify the init system (initd or SystemV). for all the nodes. Accordingly the kubelet configuration is going to be modified soon. If it systemd then cgroup driver should be systemd. There are two possibilities; cgroupfs and systemd.
 
 > cat /proc/1/comm
 > systemd
@@ -91,22 +91,22 @@ systemctl restart containerd
 
 ### 7. Remember to set systemd init service in Kubelet configuration section in the kubeadm init file.
 
-#### kubeadm-config.yaml
-kind: ClusterConfiguration
-apiVersion: kubeadm.k8s.io/v1beta3
-kubernetesVersion: v1.21.0
----
-kind: KubeletConfiguration
-apiVersion: kubelet.config.k8s.io/v1beta1
-cgroupDriver: systemd
+#### Example kubeadm-config.yaml  
+> kind: ClusterConfiguration  
+> apiVersion: kubeadm.k8s.io/v1beta3  
+> kubernetesVersion: v1.21.0  
+> ---  
+> kind: KubeletConfiguration  
+> apiVersion: kubelet.config.k8s.io/v1beta1  
+> cgroupDriver: systemd  
 
 ### 9. Install Kubernetes repo on all nodes.
 
 https://v1-28.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
 
-10 . Install kubeadm, kubelet, kubectl on all nodes.
+### 10. Install kubeadm, kubelet, kubectl on all nodes.
 
-11 . Prepare kubeadm init file on the master node.
+### 11 . Prepare kubeadm init file on the master node.
 
 https://v1-28.docs.kubernetes.io/docs/reference/config-api/kubeadm-config.v1beta3/#kubeadm-k8s-io-v1beta3-ClusterConfiguration
 
