@@ -1,4 +1,4 @@
-This file includes the steps for Kubernetes version 1.28.6-1.1.
+# This file includes the steps for Kubernetes version 1.28.6-1.1.
 
 ### 1. Disable ufw on all nodes.
 ```bash
