@@ -24,8 +24,6 @@ systemctl disable ufw
 > systemd 249 (249.11-0ubuntu3.7)
 +PAM +AUDIT +SELINUX +APPARMOR +IMA +SMACK +SECCOMP +GCRYPT +GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP +LIBFDISK +PCRE2 -PWQUALITY -P11KIT -QRENCODE +BZIP2 +LZ4 +XZ +ZLIB +ZSTD -XKBCOMMON +UTMP +SYSVINIT default-hierarchy=unified
 
-
-
 ### 6. Install containerd on all nodes.
 
 #### a. Install overlay and br_filter kernel modules.
@@ -83,8 +81,8 @@ To use the systemd cgroup driver in /etc/containerd/config.toml with runc, set t
 
 > [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
 >  ...
->  [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
->    SystemdCgroup = true
+> &nbsp;[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+> &nbsp;&nbsp;&nbsp;SystemdCgroup = true
 
 Restart containerd.
 ```console
