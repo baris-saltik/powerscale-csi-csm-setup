@@ -19,7 +19,7 @@ This file includes the steps for Kubernetes version 1.28.6-1.1.
 > ls -l /sbin/init
 > lrwxrwxrwx 1 root root 20 Apr  7  2022 /sbin/init -> /lib/systemd/systemd
 
-> systemctl --version
+> systemctl --version  
 > systemd 249 (249.11-0ubuntu3)
 > +PAM +AUDIT +SELINUX +APPARMOR +IMA +SMACK +SECCOMP +GCRYPT +GNUTLS -OPENSSL +ACL +BLKID +CURL +ELFUTILS -FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP -LIBFDISK +PCRE2 -PWQUALITY -P11KIT -QRENCODE +BZIP2 +LZ4 +XZ +ZLIB +ZSTD -XKBCOMMON +UTMP +SYSVINIT default-hierarchy=unified
 
