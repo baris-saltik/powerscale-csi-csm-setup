@@ -81,8 +81,8 @@ To use the systemd cgroup driver in /etc/containerd/config.toml with runc, set t
 
 > [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]  
 >  ...  
-> &nbsp;[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]  
-> &nbsp;&nbsp;&nbsp;SystemdCgroup = true
+> &nbsp;&nbsp;[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]  
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SystemdCgroup = true
 
 Restart containerd.
 ```console
@@ -96,7 +96,7 @@ systemctl restart containerd
 > kind: ClusterConfiguration  
 > apiVersion: kubeadm.k8s.io/v1beta3  
 > kubernetesVersion: v1.21.0  
-> \---  
+> ---  
 > kind: KubeletConfiguration  
 > apiVersion: kubelet.config.k8s.io/v1beta1  
 > cgroupDriver: systemd  
