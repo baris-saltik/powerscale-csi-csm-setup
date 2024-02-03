@@ -221,8 +221,7 @@ kubectl exec --tty --stdin nginx -- /bin/bash
 > root@nginx:/#  
 > root@nginx:/# hostname  
 > nginx  
-> root@nginx:/#exit  
-> exit
+> root@nginx:/#exit
 
 Delete the pod.
 ```console
