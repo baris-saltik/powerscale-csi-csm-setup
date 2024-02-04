@@ -15,4 +15,49 @@ cd csm-operator
 bash scripts/install.sh
 ```
 
+Verify that CSM Operator pod is running.
+```bash
+kubectl get pods -n dell-csm-operator
+```
+
+### b. Install PowerScale CSI Driver Using CSM
+
+https://dell.github.io/csm-docs/docs/deployment/csmoperator/drivers/powerscale/
+
+To see the list of installed CSI drivers:  
+```bash
+kubectl get csm --all-namespaces
+```
+
+Create a new namespace.
+```bash
+kubectl create namespace isilon
+```
+
+Create a secret.yaml file with the same content from "powerscale_csi_driver/secret.yaml" file in this repository. Customize the file to reflect the values of your environment.
+
+Then create "isilon-creds" secret using this file:
+
+```bash
+kubectl create secret generic isilon-creds -n isilon --from-file=config=secret.yaml
+```
+
+If certificate validation is skipped, create an empty secret using the file "powerscale_csi_driver/empty-secret.yaml".
+
+Then create the secret. Secret name in the yaml file above is "isilon-certs-0".
+
+```bash
+kubectl create -f empty-secret.yaml
+```
+
+Verify that both secrets are created.
+
+> kubectl get secrets --namespace isilon  
+> NAME             TYPE     DATA   AGE  
+> isilon-certs-0   Opaque   1      7s  
+> isilon-creds     Opaque   1      6m35s  
+
+
+
+
 
