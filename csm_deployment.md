@@ -15,4 +15,10 @@ cd csm-operator
 bash scripts/install.sh
 ```
 
+```bash
+git clone -b v1.4.1 https://github.com/dell/csm-operator.git
+cd csm-operator
+bash scripts/install.sh
+```
+
 
