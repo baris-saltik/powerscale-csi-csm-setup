@@ -28,6 +28,8 @@ systemctl disable ufw
 
 #### a. Install overlay and br_filter kernel modules.
 
+https://v1-28.docs.kubernetes.io/docs/setup/production-environment/container-runtimes/#install-and-configure-prerequisites
+
 ```bash
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
@@ -54,6 +56,14 @@ EOF
 Apply sysctl params without reboot.
 ```bash
 sudo sysctl --system
+```
+
+Verify that the modules are loaded and sysctl settings are applied.
+
+```bash
+lsmod | grep br_netfilter; lsmod | grep overlay    
+
+sysctl net.bridge.bridge-nf-call-iptables net.bridge.bridge-nf-call-ip6tables net.ipv4.ip_forward  
 ```
 
 #### c. Install contanerd
