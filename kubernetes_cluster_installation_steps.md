@@ -111,15 +111,16 @@ sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg  
 
 # This overwrites any existing configuration in /etc/apt/sources.list.d/kubernetes.list
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list  
+```
 
+### 8. Install kubeadm, kubelet, kubectl on all nodes.
+
+```bash
 sudo apt-get update  
 sudo apt-get install -y kubelet kubeadm kubectl  
 sudo apt-mark hold kubelet kubeadm kubectl  
 ```
-
-
-### 8. Install kubeadm, kubelet, kubectl on all nodes.
 
 ### 9 . Prepare kubeadm init file on the master node.
 
@@ -174,8 +175,8 @@ kubeadm init --config kubeadm_init_custom.yaml
 
 ```console
 cat << EOF > /etc/profile.d/kubernetes_config.sh
-> export KUBECONFIG=/etc/kubernetes/admin.conf
-> EOF
+export KUBECONFIG=/etc/kubernetes/admin.conf
+EOF
 chmod 755 /etc/profile.d/kubernetes_config.sh
 source /etc/profile
 ```
