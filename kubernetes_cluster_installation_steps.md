@@ -114,7 +114,7 @@ https://v1-28.docs.kubernetes.io/docs/reference/config-api/kubeadm-config.v1beta
 > **kind: ClusterConfiguration**  
 > networking:  
 > &nbsp;&nbsp;serviceSubnet: "10.96.0.0/16"  
-> &nbsp;&nbsp;podSubnet: "11.11.11.0/24"  
+> &nbsp;&nbsp;podSubnet: "11.11.0.0/16"  
 > &nbsp;&nbsp;dnsDomain: "realm.com"  
 > clusterName: "fr"  
 > \---  
@@ -168,6 +168,14 @@ kubeadm join 192.168.44.10:6443 --cri-socket unix:///var/run/containerd/containe
 ```
 
 ### 14. Install networking. Example Weavenet file is provided in the repository as "weave-daemonset-k8s-1.11.yaml".
+
+Edit the file to reflect the correct CIDR range.
+
+> containers:  
+> &nbsp;&nbsp;- name: weave
+> &nbsp;&nbsp;&nbsp;&nbsp;env:
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: IPALLOC_RANGE
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value: 11.11.11.0/24
 
 ```console
 kubectl apply -f weave-daemonset-k8s-1.11.yaml

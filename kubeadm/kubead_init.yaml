@@ -10,7 +10,7 @@ apiVersion: kubeadm.k8s.io/v1beta3
 kind: ClusterConfiguration
 networking:
   serviceSubnet: "10.96.0.0/16"
-  podSubnet: "11.11.11.0/24"
+  podSubnet: "11.11.0.0/16"
   dnsDomain: "realm.com"
 clusterName: "fr"
 ---
