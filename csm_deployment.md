@@ -6,9 +6,8 @@
 https://dell.github.io/csm-docs/docs/snapshots/#installation-example
 
 ```bash
-git clone https://github.com/kubernetes-csi/external-snapshotter/
+git clone -b release-6.2 https://github.com/kubernetes-csi/external-snapshotter/
 cd ./external-snapshotter
-git checkout release-6.2
 kubectl kustomize client/config/crd | kubectl create -f -
 kubectl -n kube-system kustomize deploy/kubernetes/snapshot-controller | kubectl create -f -
 ```
