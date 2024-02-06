@@ -171,6 +171,8 @@ If there are no issues run it for real on the master node.
 kubeadm init --config kubeadm_init_custom.yaml
 ```
 
+Note the last line in the output which will be used during joining other nodes.
+
 ### 11. Export KUBECONFIG pointing at /etc/kubernetes/admin.conf at boot time.
 
 ```console
@@ -184,11 +186,13 @@ source /etc/profile
 ### 12. Enable kubectl completion
 
 ```console
-echo "source <(kubectl completion bash." >> /etc/profile.d/kubernetes_config.sh
+echo "source <(kubectl completion bash)" >> /etc/profile.d/kubernetes_config.sh
 source /etc/profile
 ```
 
 ### 13. Join the worker nodes.
+
+Below syntax is an example. Remember to change the values for --token and --discovery-token-ca-cert-hash. 
 
 ```console
 kubeadm join 192.168.44.10:6443 --cri-socket unix:///var/run/containerd/containerd.sock --token zx24m3.lwu8hu3kzxgzs4go --discovery-token-ca-cert-hash sha256:fdd5ecc3cffc1145f05534109a5fe035b3e0331c7a714b803b40848f3483a147
