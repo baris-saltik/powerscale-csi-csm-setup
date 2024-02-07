@@ -102,5 +102,45 @@ kubectl create namespace karavi
 kubectl create -f storage_csm_powerscale_v290.yaml
 ```
 
+Pods in the karavi namespace will be in the ContainerCreating state until certificates are successfully created as described in the next step.
+
+Check the cert-manager pods are up and running by running the following.
+```bash
+kubectl get pods --namespace isilon | grep -E "NAME|cert-manager"
+```
+
+If they are running you can create a self-signed certificate for these pods. You can use "csm-modules\observability\selfsigned-cert.yaml" file as a template.
+
+https://dell.github.io/csm-docs/docs/deployment/csmoperator/modules/observability/
+
+```bash
+kubectl create -f selfsigned-cert.yaml
+```
+
+### b. Install Prometheus Using Helm Charts
+
+https://dell.github.io/csm-docs/docs/observability/deployment/#prometheus
+
+Install Helm3 if it is not installed.
+```bash
+curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+```
+Follow the procedure replacing "-n [CSM_NAMESPACE]" in the command syntaxed with "-n karavi".
+
+### c. Install Graphana Using Helm Charts
+
+https://dell.github.io/csm-docs/docs/observability/deployment/#grafana
+
+Follow the installation procedure replacing "-n [CSM_NAMESPACE]" in the command syntaxed with "-n karavi".
+
+Once Grafana is properly configured, you can import the pre-built observability dashboards.Log into Grafana and click the + icon in the side menu. Then click Import. From here you can upload the JSON files or paste the JSON text directly into the text area.
+
+Below is the location of the dashboards that can be imported.
+
+https://github.com/dell/karavi-observability/tree/main/grafana/dashboards/powerscale
+
+
+
+
 
 
