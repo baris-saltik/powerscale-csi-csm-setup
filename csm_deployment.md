@@ -117,6 +117,8 @@ https://dell.github.io/csm-docs/docs/deployment/csmoperator/modules/observabilit
 kubectl create -f selfsigned-cert.yaml
 ```
 
+Wait till all the pods in karavi namespace transitions to "Running" state.
+
 ### b. Install Prometheus Using Helm Charts
 
 https://dell.github.io/csm-docs/docs/observability/deployment/#prometheus
