@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: ubuntu1
+  name: ubuntu1
+  namespace: default
+spec:
+  containers:
+  - image: ubuntu:latest
+    imagePullPolicy: IfNotPresent
+    name: ubuntu1
+    command: ["/bin/bash","-c","tail -f /dev/null"]

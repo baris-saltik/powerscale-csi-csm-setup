@@ -1,0 +1,9 @@
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshot
+metadata:
+  name: snapshot-pvc1
+  namespace: app1
+spec:
+  volumeSnapshotClassName: mago-zone1-snapclass
+  source:
+    persistentVolumeClaimName: pvc1
